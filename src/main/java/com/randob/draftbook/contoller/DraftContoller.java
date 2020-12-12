@@ -19,26 +19,22 @@ public class DraftContoller {
     @Autowired
     private DraftRepository draftRepository;
 
-    //get all drafts
     @GetMapping("draft")
     public List<Draft> getAllDrafts(){
         return this.draftRepository.findAll();
     }
 
-    //get draft by id
     @GetMapping("draft/{id}")
     public ResponseEntity<Draft> getDraftById(@PathVariable(value = "id") Long draftId) throws ResourceNotFoundException {
         Draft draft = this.draftRepository.findById(draftId).orElseThrow(() -> new ResourceNotFoundException("Draft not found id: " + draftId));
         return ResponseEntity.ok().body(draft);
     }
 
-    //create draft
     @PostMapping("draft")
     public Draft createDraft(@RequestBody Draft draft){
         return this.draftRepository.save(draft);
     }
 
-    //update draft
     @PutMapping("draft/{id}")
     public ResponseEntity<Draft> updateDraft(@PathVariable(value = "id") Long draftId, @RequestBody Draft draftBody) throws ResourceNotFoundException {
         Draft draft = this.draftRepository.findById(draftId).orElseThrow(() -> new ResourceNotFoundException("Draft not found id: " + draftId));
@@ -49,7 +45,6 @@ public class DraftContoller {
         return ResponseEntity.ok(this.draftRepository.save(draft));
     }
 
-    //delete draft
     @DeleteMapping("draft/{id}")
     public Map<String, Boolean> deleteDraft(@PathVariable(value = "id") Long draftId) throws ResourceNotFoundException {
         Draft draft = this.draftRepository.findById(draftId).orElseThrow(() -> new ResourceNotFoundException("Draft not found id: " + draftId));
